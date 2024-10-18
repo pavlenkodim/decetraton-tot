@@ -1,21 +1,10 @@
 import React from "react";
-import { useTelegramHook } from "../hooks/useTelegram";
+import './Button.css';
 
-function Button({ children, onClick, ...props }) {
-  const { tg } = useTelegramHook();
-
-  const handleClick = (e) => {
-    if (onClick) {
-      onClick(e);
-    }
-    tg.HapticFeedback.impactOccurred("light");
-  };
-
-  return (
-    <button onClick={handleClick} {...props}>
-      {children}
-    </button>
-  );
-}
+const Button = (props) => {
+    return (
+        <button {...props} className={'button ' + props.className}/>
+    );
+};
 
 export default Button;

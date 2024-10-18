@@ -35,7 +35,9 @@ function CoursesPage() {
           <div key={course.id} className="course-item">
             <h2>{course.title}</h2>
             <p>{course.description}</p>
-            <Link to={`/course/${course.id}`}>Подробнее</Link>
+            <Link className="button" to={`/course/${course.id}`}>
+              Подробнее
+            </Link>
           </div>
         ))}
       </div>
