@@ -1,10 +1,10 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useTelegramHook } from "../hooks/useTelegram";
+// import { useTelegramHook } from "../hooks/useTelegram";
 
 function CoursePage() {
   const { id } = useParams();
-  const { user } = useTelegramHook();
+  // const { user } = useTelegramHook();
   const navigate = useNavigate();
 
   // Здесь должна быть логика для получения данных курса по id
