@@ -58,9 +58,11 @@ function CoursePage() {
               className="lesson-item"
               onClick={() => handleLessonClick(lesson.id)}
             >
-              <span className="lesson-number">{index + 1}.</span>
-              <span className="lesson-title">{lesson.title}</span>
-              <span className="lesson-points">{lesson.points} баллов</span>
+              <div>
+                <span className="lesson-number">{index + 1}.</span>
+                <span className="lesson-title">{lesson.title}</span>
+              </div>
+              <div className="lesson-points">{lesson.points}</div>
             </li>
           ))}
         </ul>
