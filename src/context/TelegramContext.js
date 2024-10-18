@@ -9,6 +9,7 @@ export function TelegramProvider({ children }) {
     const telegram = window.Telegram.WebApp;
     setTg(telegram);
     telegram.ready();
+    telegram.expand();
 
     // Пример использования API
     telegram.MainButton.setText("Отправить данные").show();

@@ -7,8 +7,10 @@ import CoursePage from "./pages/CoursePage";
 import RewardsPage from "./pages/RewardsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AIAssistantPage from "./pages/AIAssistantPage";
+import MyLearningPage from "./pages/MyLearningPage";
 import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
+import LessonPage from "./pages/LessonPage";
 
 function App() {
   return (
@@ -22,6 +24,11 @@ function App() {
             <Route path="/rewards" element={<RewardsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/ai-assistant" element={<AIAssistantPage />} />
+            <Route path="/my-learning" element={<MyLearningPage />} />
+            <Route
+              path="/course/:courseId/lesson/:lessonId"
+              element={<LessonPage />}
+            />
           </Routes>
         </MainLayout>
       </Router>

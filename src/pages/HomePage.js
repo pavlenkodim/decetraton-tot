@@ -13,9 +13,11 @@ function HomePage() {
 
   return (
     <div className="home-page">
-      <h1>Добро пожаловать в наше приложение!</h1>
       <nav className="main-menu">
-        <Button onClick={() => handleNavigation("/courses")}>Курсы</Button>
+        <Button onClick={() => handleNavigation("/my-learning")}>
+          Мое обучение
+        </Button>
+        <Button onClick={() => handleNavigation("/courses")}>Все курсы</Button>
         <Button onClick={() => handleNavigation("/rewards")}>Награды</Button>
         <Button onClick={() => handleNavigation("/profile")}>Профиль</Button>
         <Button onClick={() => handleNavigation("/ai-assistant")}>
