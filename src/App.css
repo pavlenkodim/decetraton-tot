@@ -79,9 +79,9 @@ main {
 .home-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  min-height: 100vh;
+  padding-bottom: 60px; /* Добавляем отступ снизу для кнопки */
+  position: relative; /* Для позиционирования кнопки */
 }
 
 .main-menu {
@@ -313,13 +313,55 @@ main {
   background-color: var(--tg-theme-bg-color);
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .lesson-item:hover {
   background-color: var(--tg-theme-secondary-bg-color);
 }
 
-/* Остальные стил для .lesson-number, .lesson-title, .lesson-points остаются без изменений */
+.lesson-item.completed {
+  background-color: var(--tg-theme-secondary-bg-color);
+}
+
+.lesson-info {
+  display: flex;
+  align-items: center;
+}
+
+.lesson-number {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.lesson-title {
+  flex-grow: 1;
+}
+
+.lesson-completed {
+  margin-left: 10px;
+  color: var(--tg-theme-button-color);
+  font-weight: bold;
+}
+
+.lesson-points {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 24px;
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.lesson-points::before {
+  content: "🪙";
+  margin-right: 4px;
+  font-size: 14px;
+}
 
 /* Добавьте новый стиль для .course-lessons */
 .course-lessons {
@@ -337,44 +379,208 @@ main {
 .lesson-page h1 {
   color: var(--tg-theme-text-color);
   margin-bottom: 20px;
+  font-size: 24px;
 }
 
-.lesson-page p {
+.lesson-number {
+  font-weight: bold;
+  color: var(--tg-theme-hint-color);
+}
+
+.lesson-content {
+  background-color: var(--tg-theme-secondary-bg-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.lesson-content h2 {
+  color: var(--tg-theme-text-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.answer-section {
+  background-color: var(--tg-theme-secondary-bg-color);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.answer-section h2 {
   color: var(--tg-theme-text-color);
   margin-bottom: 10px;
 }
 
-/* Обновите стили для .lesson-item и добавьте новые стили для .lesson-points */
-.lesson-item {
+.answer-section textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--tg-theme-hint-color);
+  border-radius: 5px;
+  background-color: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.answer-section button {
+  display: block;
+  width: 100%;
+}
+
+/* Добавьте эти стили в конец файла */
+
+.test-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.test-page h1 {
+  color: var(--tg-theme-text-color);
+  margin-bottom: 20px;
+}
+
+.question-block {
+  background-color: var(--tg-theme-secondary-bg-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.question-block h2 {
+  color: var(--tg-theme-text-color);
+  margin-bottom: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 15px;
-  background-color: var(--tg-theme-bg-color);
-  border-radius: 8px;
+  gap: 10px;
   cursor: pointer;
 }
 
-.lesson-item:hover {
-  background-color: var(--tg-theme-secondary-bg-color);
+.option input[type="radio"] {
+  cursor: pointer;
 }
 
-.lesson-points {
+.test-section {
+  margin-top: 20px;
+}
+
+/* Добавьте эти стили в конец файла */
+
+.test-result-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.test-result-page h1 {
+  color: var(--tg-theme-text-color);
+  margin-bottom: 20px;
+}
+
+.result-summary {
+  background-color: var(--tg-theme-secondary-bg-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.result-summary p {
+  margin-bottom: 10px;
+  color: var(--tg-theme-text-color);
+}
+
+/* Добавьте эти стили в конец файла */
+
+.ai-assistant-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  /* background-color: var(--tg-theme-button-color); */
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  background-color: var(--tg-theme-button-color);
   color: var(--tg-theme-button-text-color);
-  /* border-radius: 8px; */
-  font-weight: bold;
-  font-size: 14px;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+  border: none;
+  cursor: pointer;
 }
 
-.lesson-points::before {
-  content: "🪙";
-  margin-right: 4px;
-  font-size: 16px;
+.ai-assistant-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.ai-assistant-modal-content {
+  background-color: var(--tg-theme-bg-color);
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  color: var(--tg-theme-text-color);
+  cursor: pointer;
+}
+
+/* Обновите стили для .ai-assistant-page */
+.ai-assistant-page {
+  height: calc(100% - 40px); /* Учитываем высоту кнопки закрытия */
+}
+
+.chat-container {
+  height: calc(100% - 60px); /* Учитываем высоту поля ввода */
+}
+
+.toggle-main-button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  border: none;
+  cursor: pointer;
+}
+
+.toggle-main-button svg {
+  width: 24px;
+  height: 24px;
 }

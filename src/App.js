@@ -8,9 +8,11 @@ import RewardsPage from "./pages/RewardsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AIAssistantPage from "./pages/AIAssistantPage";
 import MyLearningPage from "./pages/MyLearningPage";
+import LessonPage from "./pages/LessonPage";
+import TestPage from "./pages/TestPage";
 import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
-import LessonPage from "./pages/LessonPage";
+import TestResultPage from "./pages/TestResultPage";
 
 function App() {
   return (
@@ -28,6 +30,14 @@ function App() {
             <Route
               path="/course/:courseId/lesson/:lessonId"
               element={<LessonPage />}
+            />
+            <Route
+              path="/course/:courseId/lesson/:lessonId/test"
+              element={<TestPage />}
+            />
+            <Route
+              path="/course/:courseId/lesson/:lessonId/test/result"
+              element={<TestResultPage />}
             />
           </Routes>
         </MainLayout>

@@ -1,23 +1,21 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useTelegramHook } from "../hooks/useTelegram";
+import { useCustomNavigate } from "../hooks/useCustomNavigate";
 import Button from "../components/Button";
+import AIAssistantButton from "../components/AIAssistantButton";
 
 function MainLayout({ children }) {
   const { user, onClose } = useTelegramHook();
-  const navigate = useNavigate();
+  const { goBack } = useCustomNavigate();
   const location = useLocation();
-
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   return (
     <div className="main-layout">
       <header>
         <div className="header-buttons">
           {location.pathname !== "/" && (
-            <Button onClick={handleBack} className="icon-button">
+            <Button onClick={goBack} className="icon-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -44,6 +42,7 @@ function MainLayout({ children }) {
         <h1>Welcome, {user?.first_name}</h1>
       </header>
       <main>{children}</main>
+      <AIAssistantButton />
     </div>
   );
 }

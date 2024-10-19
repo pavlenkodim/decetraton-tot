@@ -18,11 +18,11 @@ function CoursePage() {
     createdAt: "2023-01-15",
     updatedAt: "2023-05-20",
     lessons: [
-      { id: 1, title: "Основы алгоритмов", points: 10 },
-      { id: 2, title: "Переменные и типы данных", points: 15 },
-      { id: 3, title: "Условные операторы", points: 20 },
-      { id: 4, title: "Циклы", points: 25 },
-      { id: 5, title: "Функции", points: 30 },
+      { id: 1, title: "Основы алгоритмов", points: 10, completed: true },
+      { id: 2, title: "Переменные и типы данных", points: 15, completed: true },
+      { id: 3, title: "Условные операторы", points: 20, completed: false },
+      { id: 4, title: "Циклы", points: 25, completed: false },
+      { id: 5, title: "Функции", points: 30, completed: false },
     ],
   };
 
@@ -55,12 +55,15 @@ function CoursePage() {
           {course.lessons.map((lesson, index) => (
             <li
               key={lesson.id}
-              className="lesson-item"
+              className={`lesson-item ${lesson.completed ? "completed" : ""}`}
               onClick={() => handleLessonClick(lesson.id)}
             >
-              <div>
+              <div className="lesson-info">
                 <span className="lesson-number">{index + 1}.</span>
                 <span className="lesson-title">{lesson.title}</span>
+                {lesson.completed && (
+                  <span className="lesson-completed">✓</span>
+                )}
               </div>
               <div className="lesson-points">{lesson.points}</div>
             </li>
