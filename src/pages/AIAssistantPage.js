@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { useTelegramHook } from "../hooks/useTelegram";
 
 function AIAssistantPage() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const { sendData, botResponse } = useTelegramHook();
 
-  const { sendData } = useTelegramHook();
+  useEffect(() => {
+    if (botResponse) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: botResponse, sender: "ai" },
+      ]);
+    }
+  }, [botResponse]);
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -14,19 +22,14 @@ function AIAssistantPage() {
 
   const handleSendMessage = () => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, sender: "user" }]);
-      // Здесь должен быть запрос к AI API
-      // Пока что просто имитируем ответ от AI
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: input, sender: "user" },
+      ]);
       sendData({
-        type: "ai_response",
-        message: `Ответ на: ${input}`,
+        type: "ai_request",
+        message: input,
       });
-      // setTimeout(() => {
-      //   setMessages((prevMessages) => [
-      //     ...prevMessages,
-      //     { text: `Ответ на: ${input}`, sender: "ai" },
-      //   ]);
-      // }, 1000);
       setInput("");
     }
   };
