@@ -1,68 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useTelegramHook } from "../hooks/useTelegram";
-import Button from "../components/Button";
+import CourseCard from "../components/CourseCard";
 
 function ProfilePage() {
   const { user } = useTelegramHook();
-  const [totcoins, setTotcoins] = useState(0);
-  const [purchasedCourses, setPurchasedCourses] = useState([]);
 
-  useEffect(() => {
-    // Здесь должен быть запрос к API для получения баланса totcoins и купленных курсов
-    // Пока используем моковые данные
-    setTotcoins(1000);
-    setPurchasedCourses([
-      { id: 1, title: "Введение в программирование", progress: 60 },
-      { id: 2, title: "Основы JavaScript", progress: 30 },
-      { id: 3, title: "React для начинающих", progress: 0 },
-    ]);
-  }, []);
+  // Здесь должна быть логика для получения данных профиля и купленных курсов
+  // Пока используем фиктивные данные
+  const purchasedCourses = [
+    {
+      id: 1,
+      title: "Введение в программирование",
+      progress: 30,
+      description: "Базовый курс для начинающих",
+    },
+    {
+      id: 2,
+      title: "Основы JavaScript",
+      progress: 50,
+      description: "Изучите основы JavaScript",
+    },
+  ];
 
   return (
     <div className="profile-page">
+      <h1>Профиль</h1>
       <div className="user-info">
-        <img
-          src={user?.photo_url || "https://via.placeholder.com/100"}
-          alt="User avatar"
-          className="user-avatar"
-        />
-        <h1>
+        <img src={user?.photo_url} alt="User avatar" className="user-avatar" />
+        <h2>
           {user?.first_name} {user?.last_name}
-        </h1>
+        </h2>
         <p>@{user?.username}</p>
       </div>
-
-      <div className="account-info">
-        <h3>Баланс аккаунта</h3>
-        <p className="totcoins">🪙 {totcoins} TotCoins</p>
-        <h3>Рейтинг</h3>
-        <p className="totcoins">🏆 {user?.rating || 31} место </p>
-        <p>на этой неделе</p>
-      </div>
-
       <div className="purchased-courses">
-        <h2>Приобретенные курсы</h2>
-        {purchasedCourses.length > 0 ? (
-          <ul className="course-list">
-            {purchasedCourses.map((course) => (
-              <li key={course.id} className="course-item">
-                <div className="course-info">
-                  <h3>{course.title}</h3>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: `${course.progress}%` }}
-                    ></div>
-                  </div>
-                  <span className="progress-text">{course.progress}%</span>
-                </div>
-                <Button>Продолжить</Button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>У вас пока нет приобретенных курсов.</p>
-        )}
+        <h2>Купленные курсы</h2>
+        <div className="course-list">
+          {purchasedCourses.map((course) => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
       </div>
     </div>
   );

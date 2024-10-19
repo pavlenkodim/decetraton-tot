@@ -1,44 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import CourseCard from "../components/CourseCard";
 
 function CoursesPage() {
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    // Здесь должен быть запрос к API для получения списка курсов
-    // Пока используем моковые данные
-    const mockCourses = [
-      {
-        id: 1,
-        title: "Введение в React",
-        description: "Базовый курс по React",
-      },
-      {
-        id: 2,
-        title: "Продвинутый JavaScript",
-        description: "Углубленное изучение JS",
-      },
-      {
-        id: 3,
-        title: "Node.js для начинающих",
-        description: "Основы серверной разработки на Node.js",
-      },
-    ];
-    setCourses(mockCourses);
-  }, []);
+  // Здесь должна быть логика для получения списка курсов
+  // Пока используем фиктивные данные
+  const courses = [
+    {
+      id: 1,
+      title: "Введение в программирование",
+      description: "Базовый курс для начинающих программистов",
+    },
+    {
+      id: 2,
+      title: "JavaScript для начинающих",
+      description: "Изучите основы JavaScript",
+    },
+    {
+      id: 3,
+      title: "Введение в программирование",
+      description: "Базовый курс для начинающих программистов",
+    },
+  ];
 
   return (
     <div className="courses-page">
-      <h1>Все курсы</h1>
+      <h1>Доступные курсы</h1>
       <div className="course-list">
         {courses.map((course) => (
-          <div key={course.id} className="course-item">
-            <h2>{course.title}</h2>
-            <p>{course.description}</p>
-            <Link className="button" to={`/course/${course.id}`}>
-              Подробнее
-            </Link>
-          </div>
+          <CourseCard key={course.id} course={course} />
         ))}
       </div>
     </div>

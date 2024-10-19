@@ -26,11 +26,40 @@
 header {
   background-color: var(--tg-theme-secondary-bg-color);
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-header h1 {
-  margin-top: 60px;
-  margin-bottom: 0;
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+  color: var(--tg-theme-text-color);
+}
+
+.user-status {
+  font-size: 12px;
+  color: var(--tg-theme-hint-color);
+}
+
+.header-buttons {
+  display: flex;
 }
 
 main {
@@ -79,10 +108,10 @@ main {
 .home-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  align-items: center;
   padding: 20px;
-  padding-bottom: 80px; /* Увеличиваем отступ снизу для кнопки */
-  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .main-menu {
@@ -90,8 +119,6 @@ main {
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
 }
 
 .main-menu a {
@@ -597,7 +624,69 @@ main {
   height: 24px;
 }
 
-/* Добавьте новые стили для кнопок на главной странице */
+.square-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Увеличиваем отступ между кнопками */
+  width: 100%;
+  padding: 0 10px; /* Добавляем отступы от краев */
+}
+
+.square-button {
+  flex: 1;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Изменено с center на flex-start */
+  justify-content: space-between; /* Изменено с flex-end на space-between */
+  text-align: left; /* Изменено с center на left */
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 30px 20px; /* Увеличиваем внутренние отступы */
+  position: relative;
+}
+
+.square-button h3 {
+  margin-top: 0; /* Убираем автоматический отступ сверху */
+  margin-bottom: 10px; /* Добавляем небольшой отступ снизу */
+  font-size: 18px;
+  align-self: flex-start; /* Выравниваем текст по левому краю */
+}
+
+.course-counter {
+  position: absolute;
+  top: 20px; /* Увеличиваем отступ сверху */
+  left: 20px; /* Увеличиваем отступ слева */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--tg-theme-button-text-color);
+}
+
+.course-counter-number {
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 5px; /* Добавляем отступ между числом и текстом */
+}
+
+.course-counter-text {
+  font-size: 16px;
+  margin-left: 2px; /* Добавляем небольшой отступ слева для текста */
+}
+
+.home-button h3 {
+  margin-top: auto;
+  font-size: 18px; /* Увеличиваем размер шрифта для заголовка */
+}
+
+.home-button:not(.square-button)::before {
+  content: attr(data-emoji);
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+/* Обновите стили для .home-button */
 .home-button {
   width: 100%;
   padding: 15px;
@@ -609,6 +698,10 @@ main {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: left;
 }
 
 .home-button:hover {
@@ -616,7 +709,43 @@ main {
   color: var(--tg-theme-text-color);
 }
 
-/* Добавьте эти стили в конец файла */
+.home-button::before {
+  content: attr(data-emoji);
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+.home-button.my-learning {
+  background-color: #437857;
+  color: #fff;
+}
+
+.home-button.all-courses {
+  background-color: #29bf59;
+  color: #fff;
+}
+
+.home-button.rewards {
+  background-color: #5db87b;
+  color: #fff;
+}
+.home-button.leaderboard {
+  background-color: #75d56a;
+  color: #fff;
+}
+.home-button.profile {
+  background-color: #29bf59;
+  color: #fff;
+}
+
+.rewards-description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.32px;
+  text-align: left;
+  width: 40%;
+  color: var(--tg-theme-hint-color);
+}
 
 .profile-page {
   padding: 20px;
@@ -626,14 +755,6 @@ main {
 
 .user-info {
   text-align: center;
-  margin-bottom: 30px;
-}
-
-.user-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
 }
 
 .account-info {
@@ -796,4 +917,88 @@ main {
 
 .reward-card button {
   margin-top: auto;
+}
+
+/* Добавьте новые стили для header */
+header {
+  background-color: var(--tg-theme-secondary-bg-color);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Добавьте новые стили для user-coins */
+.user-coins {
+  display: flex;
+  align-items: center;
+}
+
+.coin-icon {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.coin-amount {
+  font-weight: bold;
+  color: var(--tg-theme-text-color);
+}
+
+/* Добавьте эти стили в конец файла или обновите существующие */
+
+.info-block {
+  background-color: var(--tg-theme-secondary-bg-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.info-block h2 {
+  color: var(--tg-theme-text-color);
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.info-block p {
+  color: var(--tg-theme-hint-color);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Добавьте эти стили в конец файла или обновите существующие */
+
+.course-progress {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 10px;
+  background-color: var(--tg-theme-bg-color);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--tg-theme-button-color);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color);
 }

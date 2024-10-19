@@ -39,5 +39,6 @@ export function useTelegramHook() {
     onClose,
     user,
     sendMessage,
+    queryId: tg.initDataUnsafe.query_id,
   };
 }
