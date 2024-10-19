@@ -33,8 +33,11 @@ function ProfilePage() {
       </div>
 
       <div className="account-info">
-        <h2>Баланс аккаунта</h2>
-        <p className="totcoins">{totcoins} TotCoins</p>
+        <h3>Баланс аккаунта</h3>
+        <p className="totcoins">🪙 {totcoins} TotCoins</p>
+        <h3>Рейтинг</h3>
+        <p className="totcoins">🏆 {user?.rating || 31} место </p>
+        <p>на этой неделе</p>
       </div>
 
       <div className="purchased-courses">

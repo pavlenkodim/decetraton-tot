@@ -335,7 +335,7 @@ main {
 }
 
 .lesson-item.completed {
-  background-color: var(--tg-theme-secondary-bg-color);
+  background-color: var(--tg-theme-button-color);
 }
 
 .lesson-info {
@@ -369,12 +369,6 @@ main {
   border-radius: 12px;
   font-size: 12px;
   font-weight: bold;
-}
-
-.lesson-points::before {
-  content: "🪙";
-  margin-right: 4px;
-  font-size: 14px;
 }
 
 /* Добавьте новый стиль для .course-lessons */

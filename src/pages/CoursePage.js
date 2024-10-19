@@ -18,11 +18,29 @@ function CoursePage() {
     createdAt: "2023-01-15",
     updatedAt: "2023-05-20",
     lessons: [
-      { id: 1, title: "Основы алгоритмов", points: 10, completed: true },
-      { id: 2, title: "Переменные и типы данных", points: 15, completed: true },
-      { id: 3, title: "Условные операторы", points: 20, completed: false },
-      { id: 4, title: "Циклы", points: 25, completed: false },
-      { id: 5, title: "Функции", points: 30, completed: false },
+      {
+        id: 1,
+        number: 1,
+        title: "Основы алгоритмов",
+        points: 10,
+        completed: true,
+      },
+      {
+        id: 2,
+        number: 2,
+        title: "Переменные и типы данных",
+        points: 15,
+        completed: true,
+      },
+      {
+        id: 3,
+        number: 3,
+        title: "Условные операторы",
+        points: 20,
+        completed: false,
+      },
+      { id: 4, number: 4, title: "Циклы", points: 25, completed: false },
+      { id: 5, number: 5, title: "Функции", points: 30, completed: false },
     ],
   };
 
@@ -52,20 +70,20 @@ function CoursePage() {
       <div className="course-lessons">
         <h2>Уроки курса</h2>
         <ul className="lesson-list">
-          {course.lessons.map((lesson, index) => (
+          {course.lessons.map((lesson) => (
             <li
               key={lesson.id}
               className={`lesson-item ${lesson.completed ? "completed" : ""}`}
               onClick={() => handleLessonClick(lesson.id)}
             >
               <div className="lesson-info">
-                <span className="lesson-number">{index + 1}.</span>
+                <span className="lesson-number">{lesson.number}.</span>
                 <span className="lesson-title">{lesson.title}</span>
                 {lesson.completed && (
                   <span className="lesson-completed">✓</span>
                 )}
               </div>
-              <div className="lesson-points">{lesson.points}</div>
+              <div className="lesson-points">🪙 {lesson.points}</div>
             </li>
           ))}
         </ul>

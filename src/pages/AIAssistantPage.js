@@ -1,49 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "../components/Button";
 import { useTelegramHook } from "../hooks/useTelegram";
 
 function AIAssistantPage() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
-  const { sendData, botResponse } = useTelegramHook();
-
-  useEffect(() => {
-    if (botResponse) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: botResponse, sender: "ai" },
-      ]);
-    }
-  }, [botResponse]);
+  const { sendMessage } = useTelegramHook();
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (input.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: input, sender: "user" },
-      ]);
-      sendData({
-        type: "ai_request",
-        message: input,
-      });
-      setInput("");
-    }
-  };
+      const userMessage = { text: input, sender: "user" };
+      setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
+      // Здесь должен быть запрос к AI для получения ответа
+      const aiResponse = { text: `Ответ на: ${input}`, sender: "ai" };
+      setMessages((prevMessages) => [...prevMessages, aiResponse]);
+
+      // Отправляем сообщение в Telegram
+      await sendMessage(aiResponse.text);
+
+      setInput("");
     }
   };
 
   return (
     <div className="ai-assistant-page">
-      <h1>AI Ассистент</h1>
       <div className="chat-container">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>
@@ -55,9 +40,7 @@ function AIAssistantPage() {
         <textarea
           value={input}
           onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
           placeholder="Введите ваш вопрос..."
-          rows="1"
         />
         <Button onClick={handleSendMessage}>Отправить</Button>
       </div>

@@ -36,7 +36,7 @@ function HomePage() {
           onClick={() => handleNavigation("/leaderboard")}
           className="home-button"
         >
-          🏅 Лидерборд
+          🏅 Лидеры
         </Button>
         <Button
           onClick={() => handleNavigation("/profile")}

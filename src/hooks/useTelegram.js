@@ -1,47 +1,43 @@
-import { useTelegram } from "../context/TelegramContext";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+const tg = window.Telegram.WebApp;
 
 export function useTelegramHook() {
-  const tg = useTelegram();
-  const [botResponse, setBotResponse] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    if (tg) {
-      tg.onEvent("message", handleBotResponse);
-    }
-    return () => {
-      if (tg) {
-        tg.offEvent("message", handleBotResponse);
-      }
-    };
-  }, [tg]);
-
-  const handleBotResponse = (message) => {
-    setBotResponse(message.text);
-  };
+    tg.ready();
+    setUser(tg.initDataUnsafe.user);
+  }, []);
 
   const onClose = () => {
     tg.close();
   };
 
-  const onToggleButton = () => {
-    if (tg.MainButton.isVisible) {
-      tg.MainButton.hide();
-    } else {
-      tg.MainButton.show();
+  const sendMessage = async (message) => {
+    try {
+      await tg.sendData(
+        JSON.stringify({
+          method: "answerWebAppQuery",
+          query_id: tg.initDataUnsafe.query_id,
+          result: JSON.stringify({
+            type: "article",
+            id: "1",
+            title: "Сообщение от AI ассистента",
+            input_message_content: {
+              message_text: message,
+            },
+          }),
+        })
+      );
+    } catch (error) {
+      console.error("Error sending message:", error);
     }
-  };
-
-  const sendData = (data) => {
-    tg.sendData(JSON.stringify(data));
   };
 
   return {
     onClose,
-    onToggleButton,
-    sendData,
-    botResponse,
-    tg,
-    user: tg?.initDataUnsafe?.user,
+    user,
+    sendMessage,
   };
 }
