@@ -83,24 +83,32 @@ main {
   border-radius: 8px;
   padding: 15px;
   background-color: var(--tg-theme-secondary-bg-color);
+  margin-bottom: 15px; /* Добавляем отступ между карточками курсов */
 }
 
 .course-item h2 {
   margin-top: 0;
+  margin-bottom: 10px;
   color: var(--tg-theme-text-color);
 }
 
-.course-item a {
+.course-item p {
+  margin-bottom: 15px;
+  color: var(--tg-theme-hint-color);
+}
+
+.course-item .button {
   display: inline-block;
   margin-top: 10px;
-  padding: 5px 10px;
+  padding: 8px 15px;
   background-color: var(--tg-theme-button-color);
   color: var(--tg-theme-button-text-color);
   text-decoration: none;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.course-item a:hover {
+.course-item .button:hover {
   background-color: var(--tg-theme-secondary-bg-color);
   color: var(--tg-theme-button-color);
 }
@@ -270,23 +278,24 @@ main {
 
 .progress-bar {
   flex-grow: 1;
-  height: 10px;
-  background-color: var(--tg-theme-bg-color);
-  border-radius: 5px;
+  height: 8px; /* Уменьшаем высоту для более тонкой полоски */
+  background-color: var(--tg-theme-hint-color); /* Цвет фона полоски */
+  border-radius: 4px; /* Скругляем углы */
   overflow: hidden;
   margin-right: 10px;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: var(--tg-theme-button-color);
+  background-color: var(--tg-theme-button-color); /* Цвет заполнения */
   transition: width 0.3s ease;
 }
 
 .progress-text {
-  min-width: 40px;
+  font-size: 14px;
+  color: var(--tg-theme-hint-color);
+  min-width: 40px; /* Фиксированная ширина для выравнивания */
   text-align: right;
-  color: var(--tg-theme-text-color);
 }
 
 /* Добавьте эти стили в конец файла */
@@ -629,7 +638,6 @@ main {
   justify-content: space-between;
   gap: 20px; /* Увеличиваем отступ между кнопками */
   width: 100%;
-  padding: 0 10px; /* Добавляем отступы от краев */
 }
 
 .square-button {
@@ -693,7 +701,7 @@ main {
   font-size: 18px;
   text-align: left;
   background-color: var(--tg-theme-button-color);
-  color: var(--tg-theme-button-text-color);
+  color: #fff; /* Изменено на белый цвет */
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -706,7 +714,7 @@ main {
 
 .home-button:hover {
   background-color: var(--tg-theme-secondary-bg-color);
-  color: var(--tg-theme-text-color);
+  color: #fff; /* Оставляем белый цвет при наведении */
 }
 
 .home-button::before {
@@ -717,24 +725,44 @@ main {
 
 .home-button.my-learning {
   background-color: #437857;
+  background-image: url("./img/PC.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: #fff;
 }
 
 .home-button.all-courses {
   background-color: #29bf59;
+  background-image: url("./img/world-map.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: #fff;
 }
 
 .home-button.rewards {
   background-color: #5db87b;
+  background-image: url("./img/Frame-12.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: #fff;
 }
 .home-button.leaderboard {
   background-color: #75d56a;
+  background-image: url("./img/Frame-13.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: #fff;
 }
 .home-button.profile {
   background-color: #29bf59;
+  background-image: url("./img/Frame-14.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: #fff;
 }
 
@@ -961,7 +989,7 @@ header {
 }
 
 .info-block p {
-  color: var(--tg-theme-hint-color);
+  color: var(--tg-theme-text-color);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -985,20 +1013,42 @@ header {
 
 .progress-bar {
   flex-grow: 1;
-  height: 10px;
-  background-color: var(--tg-theme-bg-color);
-  border-radius: 5px;
+  height: 8px; /* Уменьшаем высоту для более тонкой полоски */
+  background-color: var(--tg-theme-hint-color); /* Цвет фона полоски */
+  border-radius: 4px; /* Скругляем углы */
   overflow: hidden;
   margin-right: 10px;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: var(--tg-theme-button-color);
+  background-color: var(--tg-theme-button-color); /* Цвет заполнения */
   transition: width 0.3s ease;
 }
 
 .progress-text {
   font-size: 14px;
   color: var(--tg-theme-hint-color);
+  min-width: 40px; /* Фиксированная ширина для выравнивания */
+  text-align: right;
+}
+
+/* Обновите стили для конкретных кнопок */
+.home-button.my-learning,
+.home-button.all-courses,
+.home-button.rewards,
+.home-button.leaderboard,
+.home-button.profile {
+  color: #fff;
+}
+
+/* Обновите стили для .course-counter и .rewards-description */
+.course-counter,
+.rewards-description {
+  color: #fff;
+}
+
+/* Если нужно, обновите стили для h3 внутри кнопок */
+.home-button h3 {
+  color: #fff;
 }

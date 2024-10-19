@@ -28,11 +28,7 @@ function MainLayout({ children }) {
             </Button>
           )}
           <div className="user-info">
-            <img
-              src={user?.photo_url}
-              alt="User avatar"
-              className="user-avatar"
-            />
+            <img src={user?.photo} alt="User avatar" className="user-avatar" />
             <div className="user-details">
               <span className="user-name">
                 {user?.first_name} {user?.last_name}
