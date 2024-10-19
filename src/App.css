@@ -80,15 +80,18 @@ main {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-bottom: 60px; /* Добавляем отступ снизу для кнопки */
-  position: relative; /* Для позиционирования кнопки */
+  padding: 20px;
+  padding-bottom: 80px; /* Увеличиваем отступ снизу для кнопки */
+  position: relative;
 }
 
 .main-menu {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .main-menu a {
@@ -143,6 +146,7 @@ main {
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 20px;
 }
 
 .chat-container {
@@ -151,6 +155,7 @@ main {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .message {
@@ -174,21 +179,27 @@ main {
 
 .input-container {
   display: flex;
-  padding: 20px;
+  gap: 10px;
+  align-items: flex-end;
 }
 
-.input-container input {
+.input-container textarea {
   flex-grow: 1;
   padding: 10px;
   border: 1px solid var(--tg-theme-hint-color);
   border-radius: 5px;
-  margin-right: 10px;
   background-color: var(--tg-theme-bg-color);
   color: var(--tg-theme-text-color);
+  resize: vertical;
+  min-height: 60px;
 }
 
 .input-container button {
   white-space: nowrap;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Добавьте эти стили в конец файла */
@@ -578,9 +589,33 @@ main {
   color: var(--tg-theme-button-text-color);
   border: none;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-main-button:hover {
+  background-color: var(--tg-theme-secondary-bg-color);
 }
 
 .toggle-main-button svg {
   width: 24px;
   height: 24px;
+}
+
+/* Добавьте новые стили для кнопок на главной странице */
+.home-button {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  text-align: left;
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
 }

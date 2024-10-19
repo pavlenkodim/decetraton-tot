@@ -15,9 +15,14 @@ export function useTelegramHook() {
     }
   };
 
+  const sendData = (data) => {
+    tg.sendData(JSON.stringify(data));
+  };
+
   return {
     onClose,
     onToggleButton,
+    sendData,
     tg,
     user: tg?.initDataUnsafe?.user,
   };

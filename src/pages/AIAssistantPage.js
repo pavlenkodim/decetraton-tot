@@ -24,6 +24,13 @@ function AIAssistantPage() {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
     <div className="ai-assistant-page">
       <h1>AI Ассистент</h1>
@@ -35,11 +42,12 @@ function AIAssistantPage() {
         ))}
       </div>
       <div className="input-container">
-        <input
-          type="text"
+        <textarea
           value={input}
           onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
           placeholder="Введите ваш вопрос..."
+          rows="3"
         />
         <Button onClick={handleSendMessage}>Отправить</Button>
       </div>

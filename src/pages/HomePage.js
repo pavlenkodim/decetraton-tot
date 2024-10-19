@@ -14,12 +14,30 @@ function HomePage() {
   return (
     <div className="home-page">
       <nav className="main-menu">
-        <Button onClick={() => handleNavigation("/my-learning")}>
-          Мое обучение
+        <Button
+          onClick={() => handleNavigation("/my-learning")}
+          className="home-button"
+        >
+          🎓 Мое обучение
         </Button>
-        <Button onClick={() => handleNavigation("/courses")}>Все курсы</Button>
-        <Button onClick={() => handleNavigation("/rewards")}>Награды</Button>
-        <Button onClick={() => handleNavigation("/profile")}>Профиль</Button>
+        <Button
+          onClick={() => handleNavigation("/courses")}
+          className="home-button"
+        >
+          📚 Все курсы
+        </Button>
+        <Button
+          onClick={() => handleNavigation("/rewards")}
+          className="home-button"
+        >
+          🏆 Награды
+        </Button>
+        <Button
+          onClick={() => handleNavigation("/profile")}
+          className="home-button"
+        >
+          👤 Профиль
+        </Button>
       </nav>
       <Button onClick={onToggleButton} className="toggle-main-button">
         <svg
