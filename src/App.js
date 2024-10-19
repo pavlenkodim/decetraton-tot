@@ -10,9 +10,10 @@ import AIAssistantPage from "./pages/AIAssistantPage";
 import MyLearningPage from "./pages/MyLearningPage";
 import LessonPage from "./pages/LessonPage";
 import TestPage from "./pages/TestPage";
+import TestResultPage from "./pages/TestResultPage";
+import LeaderboardPage from "./pages/LeaderboardPage";
 import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
-import TestResultPage from "./pages/TestResultPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
               path="/course/:courseId/lesson/:lessonId/test/result"
               element={<TestResultPage />}
             />
+            <Route path="/leaderboard" element={<LeaderboardPage />} />
           </Routes>
         </MainLayout>
       </Router>

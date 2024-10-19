@@ -10,13 +10,14 @@ export function TelegramProvider({ children }) {
     setTg(telegram);
     telegram.ready();
     telegram.expand();
-
+    telegram.MainButton.hide();
     // Пример использования API
-    telegram.MainButton.setText("Отправить данные").show();
-    telegram.MainButton.onClick(() => {
-      // Отправка данных боту
-      telegram.sendData(JSON.stringify({ action: "submit_data" }));
-    });
+    // telegram.MainButton.setText("Отправить данные")
+    //   .show();
+    // telegram.MainButton.onClick(() => {
+    // Отправка данных боту
+    //   telegram.sendData(JSON.stringify({ action: "submit_data" }));
+    // });
   }, []);
 
   return (

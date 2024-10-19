@@ -17,7 +17,10 @@ function AIAssistantButton() {
       {isModalOpen && (
         <div className="ai-assistant-modal">
           <div className="ai-assistant-modal-content">
-            <Button onClick={toggleModal} className="close-modal-button">
+            <Button
+              onClick={toggleModal}
+              className="close-modal-button icon-button"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

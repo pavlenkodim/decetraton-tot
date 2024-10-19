@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import { useTelegramHook } from "../hooks/useTelegram";
+// import { useTelegramHook } from "../hooks/useTelegram";
 
 function HomePage() {
-  const { onToggleButton } = useTelegramHook();
+  // const { onToggleButton } = useTelegramHook();
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
@@ -30,7 +30,13 @@ function HomePage() {
           onClick={() => handleNavigation("/rewards")}
           className="home-button"
         >
-          🏆 Награды
+          🏆 Магазин вознаграждений
+        </Button>
+        <Button
+          onClick={() => handleNavigation("/leaderboard")}
+          className="home-button"
+        >
+          🏅 Лидерборд
         </Button>
         <Button
           onClick={() => handleNavigation("/profile")}
@@ -39,7 +45,7 @@ function HomePage() {
           👤 Профиль
         </Button>
       </nav>
-      <Button onClick={onToggleButton} className="toggle-main-button">
+      {/* <Button onClick={onToggleButton} className="toggle-main-button">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -49,7 +55,7 @@ function HomePage() {
           <path fill="none" d="M0 0h24v24H0z" />
           <path d="M12 16l-6-6h12z" fill="currentColor" />
         </svg>
-      </Button>
+      </Button> */}
     </div>
   );
 }

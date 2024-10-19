@@ -57,7 +57,7 @@ function AIAssistantPage() {
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           placeholder="Введите ваш вопрос..."
-          rows="3"
+          rows="1"
         />
         <Button onClick={handleSendMessage}>Отправить</Button>
       </div>
