@@ -5,7 +5,7 @@ import Button from "../components/Button";
 function TestResultPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { results, courseId, lessonId } = location.state || {};
+  const { results, courseId } = location.state || {};
 
   if (!results) {
     return <div>Ошибка: результаты теста не найдены</div>;
