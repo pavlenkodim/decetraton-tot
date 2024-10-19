@@ -371,7 +371,8 @@ main {
 }
 
 .lesson-item.completed {
-  background-color: var(--tg-theme-button-color);
+  background-color: #29bf59;
+  color: #fff;
 }
 
 .lesson-info {
@@ -771,7 +772,7 @@ main {
   font-weight: 400;
   line-height: 14.32px;
   text-align: left;
-  width: 40%;
+  width: 60%;
   color: var(--tg-theme-hint-color);
 }
 
