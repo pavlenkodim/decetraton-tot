@@ -36,7 +36,7 @@ function HomePage() {
             className="home-button square-button all-courses"
           >
             <div className="course-counter">
-              <span className="course-counter-number">17</span>
+              <span className="course-counter-number">3</span>
             </div>
             <h3>Все курсы</h3>
           </Button>

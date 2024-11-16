@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CourseCard from "../components/CourseCard";
 
 function CoursesPage() {
@@ -6,19 +7,19 @@ function CoursesPage() {
   // Пока используем фиктивные данные
   const courses = [
     {
-      id: 1,
-      title: "Введение в программирование",
-      description: "Базовый курс для начинающих программистов",
+      id: "course1",
+      title: "Основы программирования",
+      description: "Изучите базовые концепции программирования, включая переменные, функции и циклы.",
     },
     {
-      id: 2,
-      title: "JavaScript для начинающих",
-      description: "Изучите основы JavaScript",
+      id: "course2",
+      title: "Веб-разработка",
+      description: "Изучите основы HTML, Css, JavaScript",
     },
     {
-      id: 3,
-      title: "Введение в программирование",
-      description: "Базовый курс для начинающих программистов",
+      id: "course3",
+      title: "Основы мобильной разработки",
+      description: "Разрабатывайте мобильные приложения с использованием React Native",
     },
   ];
 
@@ -27,7 +28,9 @@ function CoursesPage() {
       <h1>Доступные курсы</h1>
       <div className="course-list">
         {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
+          <Link key={course.id} to={`/course/${course.id}`} style={{ textDecoration: 'none' }}>
+            <CourseCard course={course} />
+          </Link>
         ))}
       </div>
     </div>
