@@ -11,19 +11,19 @@ const MyLearningPage = () => {
   // Пока используем фиктивные данные
   const purchasedCourses = [
     {
-      id: 1,
+      id: "course1",
       title: "Введение в программирование",
       progress: 30,
       description: "Базовый курс для начинающих",
     },
     {
-      id: 2,
+      id: "course2",
       title: "Основы JavaScript",
       progress: 50,
       description: "Изучите основы JavaScript",
     },
     {
-      id: 3,
+      id: "course3",
       title: "React для начинающих",
       progress: 10,
       description: "Начните создавать приложения с React",
