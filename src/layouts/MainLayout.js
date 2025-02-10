@@ -44,7 +44,7 @@ function MainLayout({ children }) {
           </div>
           <div className="user-coins">
             <span className="coin-icon">🪙</span>
-            <span className="coin-amount">1000</span>
+            <span className="coin-amount">Coins Soon</span>
           </div>
         </div>
       </header>

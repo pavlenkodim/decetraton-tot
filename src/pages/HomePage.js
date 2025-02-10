@@ -37,6 +37,7 @@ function HomePage() {
           >
             <div className="course-counter">
               <span className="course-counter-number">3</span>
+              <span className="course-counter-text">курса</span>
             </div>
             <h3>Все курсы</h3>
           </Button>

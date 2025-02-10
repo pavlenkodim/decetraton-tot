@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../components/Button";
 import { useTelegramHook } from "../hooks/useTelegram";
+import { sendPromptToDeepSeek } from "../services/deepseekService"; // Импортируем сервис
 
 function AIAssistantPage() {
   const [input, setInput] = useState("");
@@ -16,12 +17,19 @@ function AIAssistantPage() {
       const userMessage = { text: input, sender: "user" };
       setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-      // Здесь должен быть запрос к AI для получения ответа
-      const aiResponse = { text: `Ответ на: ${input}`, sender: "ai" };
-      setMessages((prevMessages) => [...prevMessages, aiResponse]);
+      try {
+        // Запрашиваем ответ от DeepSeek API
+        const aiResponseText = await sendPromptToDeepSeek(input);
+        const aiResponse = { text: aiResponseText, sender: "ai" };
+        setMessages((prevMessages) => [...prevMessages, aiResponse]);
 
-      // Отправляем сообщение в Telegram
-      await sendMessage(aiResponse.text);
+        // Отправляем сообщение в Telegram
+        await sendMessage(aiResponse.text);
+      } catch (error) {
+        console.error("Ошибка при запросе к DeepSeek API:", error);
+        const errorMessage = { text: "Произошла ошибка при обработке запроса.", sender: "ai" };
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      }
 
       setInput("");
     }
