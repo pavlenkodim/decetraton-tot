@@ -1,133 +1,104 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-// Данные курсов внутри файла для эмуляции сервера
-const courseData = {
-  course1: {
-    id: "course1",
-    title: "Основы программирования",
-    description: "Изучите базовые концепции программирования, включая переменные, функции и циклы.",
-    author: "Иван Иванов",
-    createdAt: "2023-01-15",
-    updatedAt: "2023-05-20",
-    lessons: [
-      { id: 1, number: 1, title: "Основы алгоритмов", points: 10, completed: true },
-      { id: 2, number: 2, title: "Переменные и типы данных", points: 15, completed: true },
-      { id: 3, number: 3, title: "Условные операторы", points: 20, completed: false },
-      { id: 4, number: 4, title: "Циклы", points: 25, completed: false },
-      { id: 5, number: 5, title: "Функции", points: 30, completed: false },
-    ],
-  },
-  course2: {
-    id: "course2",
-    title: "Веб-разработка",
-    description: "Погрузитесь в мир HTML, CSS и JavaScript для создания современных веб-сайтов.",
-    author: "Петр Петров",
-    createdAt: "2023-02-01",
-    updatedAt: "2023-06-10",
-    lessons: [
-      { id: 1, number: 1, title: "Основы HTML", points: 10, completed: false },
-      { id: 2, number: 2, title: "Стилизация с помощью CSS", points: 15, completed: false },
-      { id: 3, number: 3, title: "Динамика с помощью JavaScript", points: 20, completed: false },
-    ],
-  },
-  course3: {
-    id: "course3",
-    title: "Основы мобильной разработки",
-    description: "Разрабатывайте мобильные приложения с использованием React Native.",
-    author: "Анна Сидорова",
-    createdAt: "2023-03-10",
-    updatedAt: "2023-07-15",
-    lessons: [
-      { id: 1, number: 1, title: "Установка окружения", points: 10, completed: false },
-      { id: 2, number: 2, title: "Основы React Native", points: 15, completed: false },
-      { id: 3, number: 3, title: "Создание пользовательского интерфейса", points: 20, completed: false },
-    ],
-  },
-};
-
 // Функция для получения данных курса
 const fetchCourseData = (courseId) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(courseData[courseId] || null);
-    }, 500); // Симуляция задержки ответа сервера
-  });
+  fetch(`/api/course/${courseId}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Ошибка загрузки курса");
+      }
+      return response.json();
+    })
+    .then((data) => data);
 
 function CoursePage() {
-  const { id } = useParams();
+  const { id } = useParams(); // Получаем ID курса из URL
   const navigate = useNavigate();
 
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!id || !courseData[id]) {
+    if (!id) {
       setLoading(false);
+      setError("Неверный ID курса.");
       return;
     }
-    fetchCourseData(id).then((data) => {
-      setCourse(data);
-      setLoading(false);
-    });
+
+    // Делаем запрос на получение данных курса по ID
+    fetchCourseData(id)
+      .then((data) => {
+        setCourse(data); // Сохраняем данные курса в состоянии
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки курса:", err);
+        setError("Не удалось загрузить курс.");
+        setLoading(false);
+      });
   }, [id]);
 
+  // Если данные ещё загружаются
   if (loading) {
     return <div>Загрузка...</div>;
   }
 
-  if (!course) {
-    return <div>Курс не найден. Проверьте правильность идентификатора.</div>;
+  // Если произошла ошибка
+  if (error) {
+    return <div>{error}</div>;
   }
 
-  // Функция обработки клика по уроку, перенаправляет пользователя на страницу урока
-  const handleLessonClick = (lessonId) => {
-    navigate(`/course/${id}/lesson/${lessonId}`);
+  // Если курс не найден
+  if (!course) {
+    return <div>Курс не найден.</div>;
+  }
+
+  // Функция для перехода на страницу задания
+  const handleTaskClick = (taskId) => {
+    navigate(`/task/${taskId}`);
   };
 
   return (
     <div className="course-page">
-      <h1 className="course-title">{course.title}</h1>
-      <div className="course-info">
-        <p className="course-description">{course.description}</p>
+      <div className="container">
+        {/* Заголовок и описание курса */}
+        <div className="course-header">
+          <h1>{course.name}</h1>
+          <p>{course.description}</p>
+        </div>
+
+        {/* Информация о курсе */}
         <div className="course-details">
+          <p><strong>Автор:</strong> {course.author}</p>
           <p>
-            <strong>Автор:</strong> {course.author}
+            <strong>Дата создания:</strong> {new Date(course.createdAt).toLocaleDateString()}
           </p>
           <p>
-            <strong>Дата создания:</strong>{" "}
-            {new Date(course.createdAt).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Последнее обновление:</strong>{" "}
-            {new Date(course.updatedAt).toLocaleDateString()}
+            <strong>Последнее обновление:</strong> {new Date(course.updatedAt).toLocaleDateString()}
           </p>
         </div>
-      </div>
-      <div className="course-lessons">
-        <h2>Уроки курса</h2>
-        <ul className="lesson-list">
-          {course.lessons && course.lessons.length > 0 ? (
-            course.lessons.map((lesson) => (
-              <li
-                key={lesson.id}
-                className={`lesson-item ${lesson.completed ? "completed" : ""}`}
-                onClick={() => handleLessonClick(lesson.id)}
+
+        {/* Список заданий курса */}
+        <div className="tasks">
+          <h2>Задания:</h2>
+          {course.tasks && course.tasks.length > 0 ? (
+            course.tasks.map((task) => (
+              <div
+                key={task.id}
+                className="task"
+                onClick={() => handleTaskClick(task.id)}
               >
-                <div className="lesson-info">
-                  <span className="lesson-number">{lesson.number}.</span>
-                  <span className="lesson-title">{lesson.title}</span>
-                  {lesson.completed && (
-                    <span className="lesson-completed">✓</span>
-                  )}
-                </div>
-                <div className="lesson-points">🪙 {lesson.points}</div>
-              </li>
+                <h3>{task.title}</h3>
+                <p>{task.description}</p>
+                <a href={task.link}>Посмотреть задание</a>
+              </div>
             ))
           ) : (
-            <li>Уроки не найдены.</li>
+            <p>Нет заданий, прикрепленных к этому курсу.</p>
           )}
-        </ul>
+        </div>
       </div>
     </div>
   );
