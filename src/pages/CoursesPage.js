@@ -17,14 +17,15 @@ function CoursesPage() {
         },
       })
       .then((response) => {
-        // Проверяем, что ответ является правильным JSON
         console.log("Полученные данные:", response.data);
 
+        // Печатаем данные, чтобы увидеть, что приходит от сервера
         if (response.data && Array.isArray(response.data.courses)) {
-          setCourses(response.data.courses); // Если это массив, сохраняем его
+          console.log("courses:", response.data.courses);
+          setCourses(response.data.courses);  // Если это массив, сохраняем его
         } else {
           setError("Ошибка: Ответ не содержит список курсов.");
-          console.warn("Ожидался массив курсов, но получен:", response.data);
+          console.warn("Ожидался массив курсов, но получен:", response.data.courses);
         }
         setLoading(false);
       })
