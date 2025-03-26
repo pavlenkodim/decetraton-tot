@@ -25,7 +25,7 @@ function CoursesPage() {
           setCourses(response.data.courses);  // Если это массив, сохраняем его
         } else {
           setError("Ошибка: Ответ не содержит список курсов.");
-          console.warn("Ожидался массив курсов, но получен:", response.data.courses);
+          console.warn("Ожидался массив курсов, но получен:", response.data);
         }
         setLoading(false);
       })
