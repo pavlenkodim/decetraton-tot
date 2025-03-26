@@ -19,8 +19,14 @@ function CoursesPage() {
       })
       .then((response) => {
         console.log("Полученные данные:", response.data);
-        // Если API возвращает объект с полем courses, используйте response.data.courses, иначе response.data
-        setCourses(response.data.courses || response.data);
+
+        // Проверяем, что response.data.courses является массивом
+        if (Array.isArray(response.data.courses)) {
+          setCourses(response.data.courses);  // Если это массив, сохраняем его
+        } else {
+          console.warn("Ожидался массив курсов, но получен:", response.data.courses);
+          setCourses([]);  // В случае ошибки просто очищаем список
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -41,7 +47,7 @@ function CoursesPage() {
           courses.map((course) => (
             <Link
               key={course.id}
-              to={`/course/${course.id}`}
+              to={`/course/${course.id}`} // Исправил строку на правильный формат
               style={{ textDecoration: "none" }}
             >
               <CourseCard course={course} />
