@@ -11,6 +11,7 @@ function TestPage() {
   const [answers, setAnswers] = useState({});  // Храним ответы пользователя
 
   useEffect(() => {
+    console.log("courseId:", courseId, "lessonId:", lessonId);  // Для отладки
     if (!lessonId) {
       console.error("Ошибка: lessonId не задан.");
       return;

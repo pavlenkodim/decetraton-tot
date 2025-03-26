@@ -12,6 +12,7 @@ import LessonPage from "./pages/LessonPage";
 import TestPage from "./pages/TestPage";
 import TestResultPage from "./pages/TestResultPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
+import TaskPage from "./pages/TaskPage"; // Добавлено для TaskPage
 import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
 
@@ -28,19 +29,15 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/ai-assistant" element={<AIAssistantPage />} />
             <Route path="/my-learning" element={<MyLearningPage />} />
-            <Route
-              path="/course/:courseId/lesson/:lessonId"
-              element={<LessonPage />}
-            />
-            <Route
-              path="/course/:courseId/lesson/:lessonId/test"
-              element={<TestPage />}
-            />
-            <Route
-              path="/course/:courseId/lesson/:lessonId/test/result"
-              element={<TestResultPage />}
-            />
             <Route path="/leaderboard" element={<LeaderboardPage />} />
+
+            {/* Маршруты для уроков и тестов */}
+            <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
+            <Route path="/course/:courseId/lesson/:lessonId/test" element={<TestPage />} />
+            <Route path="/course/:courseId/lesson/:lessonId/test/result" element={<TestResultPage />} />
+
+            {/* Маршрут для задания */}
+            <Route path="/task/:taskId" element={<TaskPage />} /> {/* Это будет новая страница для заданий */}
           </Routes>
         </MainLayout>
       </Router>

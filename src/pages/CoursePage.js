@@ -57,7 +57,7 @@ function CoursePage() {
 
   // Функция для перехода на страницу задания
   const handleTaskClick = (taskId) => {
-    navigate(`/task/${taskId}`);
+    navigate(`/task/${taskId}`);  // Правильная навигация на страницу задания
   };
 
   return (
@@ -88,11 +88,13 @@ function CoursePage() {
               <div
                 key={task.id}
                 className="task"
-                onClick={() => handleTaskClick(task.id)}
+                onClick={() => handleTaskClick(task.id)}  // Переход по клику
               >
                 <h3>{task.title}</h3>
                 <p>{task.description}</p>
-                <a href={task.link}>Посмотреть задание</a>
+                <button onClick={() => handleTaskClick(task.id)} className="task-button">
+                  Посмотреть задание
+                </button>
               </div>
             ))
           ) : (

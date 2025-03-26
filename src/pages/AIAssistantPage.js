@@ -19,10 +19,11 @@ function AIAssistantPage() {
 
       try {
         // Запрашиваем ответ от DeepSeek API
-        const aiResponseText = await sendPromptToDeepSeek(input);
-        const aiResponse = { text: aiResponseText, sender: "ai" };
+        const response = await sendPromptToDeepSeek(input);
+        // Предполагаем, что response имеет вид { answer: "текст" }
+        const aiResponse = { text: response.answer, sender: "ai" };
         setMessages((prevMessages) => [...prevMessages, aiResponse]);
-
+      
         // Отправляем сообщение в Telegram
         await sendMessage(aiResponse.text);
       } catch (error) {
@@ -30,6 +31,7 @@ function AIAssistantPage() {
         const errorMessage = { text: "Произошла ошибка при обработке запроса.", sender: "ai" };
         setMessages((prevMessages) => [...prevMessages, errorMessage]);
       }
+      
 
       setInput("");
     }
