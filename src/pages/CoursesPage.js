@@ -6,10 +6,11 @@ import axios from "axios";
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Отправляем запрос на правильный URL
+    // Отправляем запрос на относительный URL.
+    // Благодаря proxy в package.json запрос попадет на:
+    // https://timofeirazow.pythonanywhere.com/api/user_dashboard
     axios
       .get("/api/user_dashboard", {
         headers: {
@@ -18,20 +19,12 @@ function CoursesPage() {
       })
       .then((response) => {
         console.log("Полученные данные:", response.data);
-
-        // Печатаем данные, чтобы увидеть, что приходит от сервера
-        if (response.data && Array.isArray(response.data.courses)) {
-          console.log("courses:", response.data.courses);
-          setCourses(response.data.courses);  // Если это массив, сохраняем его
-        } else {
-          setError("Ошибка: Ответ не содержит список курсов.");
-          console.warn("Ожидался массив курсов, но получен:", response.data);
-        }
+        // Если API возвращает объект с полем courses, используйте response.data.courses, иначе response.data
+        setCourses(response.data.courses || response.data);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Ошибка загрузки курсов:", error);
-        setError("Не удалось загрузить курсы.");
         setLoading(false);
       });
   }, []);
@@ -40,15 +33,11 @@ function CoursesPage() {
     return <div>Загрузка курсов...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
     <div className="courses-page">
       <h1>Доступные курсы</h1>
       <div className="course-list">
-        {courses.length > 0 ? (
+        {courses && courses.length > 0 ? (
           courses.map((course) => (
             <Link
               key={course.id}
