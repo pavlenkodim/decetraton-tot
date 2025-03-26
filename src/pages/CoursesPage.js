@@ -9,9 +9,7 @@ function CoursesPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Отправляем запрос на относительный URL.
-    // Благодаря proxy в package.json запрос попадет на:
-    // https://timofeirazow.pythonanywhere.com/api/user_dashboard
+    // Отправляем запрос на правильный URL
     axios
       .get("/api/user_dashboard", {
         headers: {
@@ -19,21 +17,20 @@ function CoursesPage() {
         },
       })
       .then((response) => {
+        // Проверяем, что ответ является правильным JSON
         console.log("Полученные данные:", response.data);
 
-        // Печатаем данные, чтобы увидеть, что приходит от сервера
         if (response.data && Array.isArray(response.data.courses)) {
-          console.log("courses:", response.data.courses);
-          setCourses(response.data.courses);  // Если это массив, сохраняем его
+          setCourses(response.data.courses); // Если это массив, сохраняем его
         } else {
-          console.warn("Ожидался массив курсов, но получен:", response.data.courses);
-          setCourses([]);  // В случае ошибки очищаем список курсов
+          setError("Ошибка: Ответ не содержит список курсов.");
+          console.warn("Ожидался массив курсов, но получен:", response.data);
         }
         setLoading(false);
       })
       .catch((error) => {
         console.error("Ошибка загрузки курсов:", error);
-        setError("Ошибка загрузки курсов");
+        setError("Не удалось загрузить курсы.");
         setLoading(false);
       });
   }, []);
@@ -54,7 +51,7 @@ function CoursesPage() {
           courses.map((course) => (
             <Link
               key={course.id}
-              to={`/course/${course.id}`} // Исправил строку на правильный формат
+              to={`/course/${course.id}`}
               style={{ textDecoration: "none" }}
             >
               <CourseCard course={course} />
