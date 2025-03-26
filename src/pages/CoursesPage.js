@@ -6,6 +6,7 @@ import axios from "axios";
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Отправляем запрос на относительный URL.
@@ -20,17 +21,19 @@ function CoursesPage() {
       .then((response) => {
         console.log("Полученные данные:", response.data);
 
-        // Проверяем, что response.data.courses является массивом
-        if (Array.isArray(response.data.courses)) {
+        // Печатаем данные, чтобы увидеть, что приходит от сервера
+        if (response.data && Array.isArray(response.data.courses)) {
+          console.log("courses:", response.data.courses);
           setCourses(response.data.courses);  // Если это массив, сохраняем его
         } else {
           console.warn("Ожидался массив курсов, но получен:", response.data.courses);
-          setCourses([]);  // В случае ошибки просто очищаем список
+          setCourses([]);  // В случае ошибки очищаем список курсов
         }
         setLoading(false);
       })
       .catch((error) => {
         console.error("Ошибка загрузки курсов:", error);
+        setError("Ошибка загрузки курсов");
         setLoading(false);
       });
   }, []);
@@ -39,11 +42,15 @@ function CoursesPage() {
     return <div>Загрузка курсов...</div>;
   }
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div className="courses-page">
       <h1>Доступные курсы</h1>
       <div className="course-list">
-        {courses && courses.length > 0 ? (
+        {courses.length > 0 ? (
           courses.map((course) => (
             <Link
               key={course.id}
