@@ -29,7 +29,6 @@ function TestPage() {
       console.error("Ошибка: lessonId не задан.");
       return;
     }
-
     fetchData();
   }, [lessonId]);
 
