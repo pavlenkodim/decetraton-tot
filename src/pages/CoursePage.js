@@ -43,15 +43,15 @@ function CoursePage() {
   if (!course) return <div>Курс не найден.</div>;
 
   // Функция для перехода на страницу задания.
-  // Здесь предполагается, что у каждого задания есть task.id и lessonId (если нужно)
-  const handleTaskClick = (taskId, lessonId) => {
+  const handleTaskClick = (taskId) => {
     if (!taskId) {
       console.error("Ошибка: taskId не задан.");
       return;
     }
     console.log("Переход на задание:", taskId);
-    // Например, переходим по маршруту с courseId, lessonId и taskId
-    navigate(`/course/${id}/lesson/${lessonId}/task/${taskId}`);
+    
+    // Переход на задание с правильным API-путём
+    navigate(`/task_data/${taskId}`);
   };
 
   return (
@@ -76,23 +76,20 @@ function CoursePage() {
             course.tasks.map((task, index) => {
               // Если у задания нет поля id, используем индекс+1 как строку
               const taskId = task.id ? task.id.toString() : (index + 1).toString();
-              // Если у задания есть lessonId, используем его; иначе можно задать значение по умолчанию
-              const lessonId = task.lessonId ? task.lessonId.toString() : "1";
               console.log("Отрисовываем задание:", taskId);
               return (
                 <div
                   key={taskId}
                   className="task"
-                  onClick={() => handleTaskClick(taskId, lessonId)}
+                  onClick={() => handleTaskClick(taskId)}
                   style={{ cursor: "pointer", border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}
                 >
                   <h3>{task.title}</h3>
                   <p>{task.description}</p>
-                  {/* Можно использовать кнопку для перехода */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleTaskClick(taskId, lessonId);
+                      handleTaskClick(taskId);
                     }}
                   >
                     Посмотреть задание

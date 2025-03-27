@@ -32,8 +32,8 @@ function App() {
             <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/course/:courseId/lesson/:lessonId/test" element={<TestPage />} />
             <Route path="/course/:courseId/lesson/:lessonId/test/result" element={<TestResultPage />} />
-            {/* Новый маршрут для страницы задания */}
-            <Route path="/course/:courseId/lesson/:lessonId/task/:taskId" element={<TaskPage />} />
+            {/* Добавленный маршрут для задания */}
+            <Route path="/task_data/:taskId" element={<TaskPage />} />
             <Route path="/leaderboard" element={<LeaderboardPage />} />
           </Routes>
         </MainLayout>

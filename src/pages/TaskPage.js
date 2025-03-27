@@ -3,10 +3,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function TaskPage() {
-  // Из маршрута получаем courseId, lessonId и taskId
   const { courseId, lessonId, taskId } = useParams();
   console.log("Получены параметры в TaskPage:", { courseId, lessonId, taskId });
-  
+
   const [taskData, setTaskData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,14 +17,26 @@ function TaskPage() {
       return;
     }
 
-    // Формируем URL запроса с использованием courseId и taskId
-    const url = `/api/course/${courseId}/task_data/${taskId}`;
-    console.log("Запрос задания по URL:", url);
+    // Запрос для курса
+    const courseUrl = `https://timofeirazow.pythonanywhere.com/api/course/${courseId}`;
+    console.log("Запрос курса по URL:", courseUrl);
+
+    // Запрос задания
+    const taskUrl = `https://timofeirazow.pythonanywhere.com/task_data/${taskId}`;
+    console.log("Запрос задания по URL:", taskUrl);
+
+    // Выполняем оба запроса: курс и задание
+    axios
+      .get(courseUrl, { headers: { "Accept": "application/json" } })
+      .then((response) => {
+        console.log("Полученные данные курса:", response.data);
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки курса:", err);
+      });
 
     axios
-      .get(url, {
-        headers: { "Accept": "application/json" },
-      })
+      .get(taskUrl, { headers: { "Accept": "application/json" } })
       .then((response) => {
         console.log("Полученные данные задания:", response.data);
         setTaskData(response.data);
