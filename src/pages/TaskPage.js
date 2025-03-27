@@ -1,53 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../services/apiClient";
 
 function TaskPage() {
-  const { courseId, lessonId, taskId } = useParams();
-  console.log("Получены параметры в TaskPage:", { courseId, lessonId, taskId });
+  const { courseId, lessonId } = useParams();
+  console.log("Получены параметры в TaskPage:", { courseId, lessonId });
 
   const [taskData, setTaskData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchCourseData = async () => {
+    try {
+      const response = await apiClient(`/api/course/${courseId}`);
+      console.log("Полученные данные курса:", response.data);
+    } catch (error) {
+      console.error("Ошибка загрузки курса:", error);
+    } finally {
+    }
+  };
+
+  const fetchTaskData = async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient(`/task_data/${lessonId}`);
+      console.log("Полученные данные задания:", response.data);
+      setTaskData(response.data);
+    } catch (error) {
+      console.error("Ошибка загрузки задания:", error);
+      setError("Ошибка загрузки задания");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (!taskId) {
-      setError("Ошибка: taskId не задан.");
+    if (!lessonId) {
+      setError("Ошибка: lessonId не задан.");
       setLoading(false);
       return;
     }
-
-    // Запрос для курса
-    const courseUrl = `https://timofeirazow.pythonanywhere.com/api/course/${courseId}`;
-    console.log("Запрос курса по URL:", courseUrl);
-
-    // Запрос задания
-    const taskUrl = `https://timofeirazow.pythonanywhere.com/task_data/${taskId}`;
-    console.log("Запрос задания по URL:", taskUrl);
-
-    // Выполняем оба запроса: курс и задание
-    axios
-      .get(courseUrl, { headers: { "Accept": "application/json" } })
-      .then((response) => {
-        console.log("Полученные данные курса:", response.data);
-      })
-      .catch((err) => {
-        console.error("Ошибка загрузки курса:", err);
-      });
-
-    axios
-      .get(taskUrl, { headers: { "Accept": "application/json" } })
-      .then((response) => {
-        console.log("Полученные данные задания:", response.data);
-        setTaskData(response.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Ошибка загрузки задания:", err);
-        setError("Ошибка загрузки задания");
-        setLoading(false);
-      });
-  }, [courseId, lessonId, taskId]);
+    fetchCourseData();
+    fetchTaskData();
+  }, [courseId, lessonId]);
 
   if (loading) return <div>Загрузка задания...</div>;
   if (error) return <div>{error}</div>;
@@ -55,9 +50,31 @@ function TaskPage() {
   return (
     <div className="task-page">
       <div className="container">
-        <h1>Задание: {taskData.title}</h1>
-        <p>{taskData.description}</p>
-        {/* Дополнительное отображение данных задания */}
+        {taskData.map((task, index) => (
+          <div key={index}>
+            <h2>Задание: {task.questionText}</h2>
+            {task.state === "checkbox" && (
+              <div>
+                {task.options.map((options, index) => (
+                  <div key={index}>
+                    <input type="checkbox" />
+                    <label>{options.optionText}</label>
+                  </div>
+                ))}
+              </div>
+            )}
+            {task.state === "radiobox" && (
+              <div>
+                {task.options.map((options, index) => (
+                  <div key={index}>
+                    <input type="radio" />
+                    <label>{options.optionText}</label>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

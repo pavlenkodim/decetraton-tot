@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import axios from "axios";
+import apiClient from "../services/apiClient";
 
 function TestPage() {
   // Получаем параметры из URL: courseId и lessonId (передаётся в маршруте)
@@ -15,24 +15,22 @@ function TestPage() {
   const [test, setTest] = useState(null);
   const [answers, setAnswers] = useState({});
 
+  const fetchData = async () => {
+    try {
+      const response = await apiClient(`/task_data/${lessonId}`);
+      setTest(response.data);
+    } catch (error) {
+      console.error("Ошибка загрузки теста:", error);
+    }
+  };
+
   useEffect(() => {
     if (!lessonId) {
       console.error("Ошибка: lessonId не задан.");
       return;
     }
 
-    // Запрашиваем данные теста по API, используя lessonId
-    axios
-      .get(`/api/task_data/${lessonId}`, {
-        headers: { "Accept": "application/json" },
-      })
-      .then((response) => {
-        console.log("Полученные данные теста:", response.data);
-        setTest(response.data);
-      })
-      .catch((error) => {
-        console.error("Ошибка загрузки теста:", error);
-      });
+    fetchData();
   }, [lessonId]);
 
   // Обработчик выбора ответа для вопроса
@@ -74,25 +72,26 @@ function TestPage() {
   return (
     <div className="test-page">
       <h1>Тест по уроку</h1>
-      {test.questions && test.questions.map((question, qIndex) => (
-        <div key={question.id} className="question-block">
-          <h2>Вопрос {qIndex + 1}</h2>
-          <p>{question.text}</p>
-          <div className="options">
-            {question.options.map((option, oIndex) => (
-              <label key={oIndex} className="option">
-                <input
-                  type="radio"
-                  name={`question-${question.id}`}
-                  checked={answers[question.id] === oIndex}
-                  onChange={() => handleAnswerSelect(question.id, oIndex)}
-                />
-                {option}
-              </label>
-            ))}
+      {test.questions &&
+        test.questions.map((question, qIndex) => (
+          <div key={question.id} className="question-block">
+            <h2>Вопрос {qIndex + 1}</h2>
+            <p>{question.text}</p>
+            <div className="options">
+              {question.options.map((option, oIndex) => (
+                <label key={oIndex} className="option">
+                  <input
+                    type="radio"
+                    name={`question-${question.id}`}
+                    checked={answers[question.id] === oIndex}
+                    onChange={() => handleAnswerSelect(question.id, oIndex)}
+                  />
+                  {option}
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
       <Button onClick={handleSubmit}>Завершить тест</Button>
     </div>
   );

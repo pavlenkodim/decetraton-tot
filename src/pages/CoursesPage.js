@@ -1,32 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CourseCard from "../components/CourseCard";
-import axios from "axios";
+import apiClient from "../services/apiClient";
 
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient("/api/user_dashboard");
+      setCourses(response.data.courses || response.data);
+    } catch (error) {
+      console.error("Ошибка загрузки курсов:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // Отправляем запрос на относительный URL.
-    // Благодаря proxy в package.json запрос попадет на:
-    // https://timofeirazow.pythonanywhere.com/api/user_dashboard
-    axios
-      .get("/api/user_dashboard", {
-        headers: {
-          "Accept": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log("Полученные данные:", response.data);
-        // Если API возвращает объект с полем courses, используйте response.data.courses, иначе response.data
-        setCourses(response.data.courses || response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Ошибка загрузки курсов:", error);
-        setLoading(false);
-      });
+    fetchData();
   }, []);
 
   if (loading) {
@@ -39,11 +33,7 @@ function CoursesPage() {
       <div className="course-list">
         {courses && courses.length > 0 ? (
           courses.map((course) => (
-            <Link
-              key={course.id}
-              to={`/course/${course.id}`}
-              style={{ textDecoration: "none" }}
-            >
+            <Link key={course.id} to={`/course/${course.id}`} style={{ textDecoration: "none" }}>
               <CourseCard course={course} />
             </Link>
           ))

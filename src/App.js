@@ -8,7 +8,6 @@ import RewardsPage from "./pages/RewardsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AIAssistantPage from "./pages/AIAssistantPage";
 import MyLearningPage from "./pages/MyLearningPage";
-import LessonPage from "./pages/LessonPage";
 import TestPage from "./pages/TestPage";
 import TestResultPage from "./pages/TestResultPage";
 import TaskPage from "./pages/TaskPage"; // Страница задания
@@ -29,11 +28,12 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/ai-assistant" element={<AIAssistantPage />} />
             <Route path="/my-learning" element={<MyLearningPage />} />
-            <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
+            <Route path="/course/:courseId/lesson/:lessonId" element={<TaskPage />} />
             <Route path="/course/:courseId/lesson/:lessonId/test" element={<TestPage />} />
-            <Route path="/course/:courseId/lesson/:lessonId/test/result" element={<TestResultPage />} />
-            {/* Добавленный маршрут для задания */}
-            <Route path="/task_data/:taskId" element={<TaskPage />} />
+            <Route
+              path="/course/:courseId/lesson/:lessonId/test/result"
+              element={<TestResultPage />}
+            />
             <Route path="/leaderboard" element={<LeaderboardPage />} />
           </Routes>
         </MainLayout>

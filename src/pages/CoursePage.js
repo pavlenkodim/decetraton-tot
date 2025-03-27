@@ -49,9 +49,9 @@ function CoursePage() {
       return;
     }
     console.log("Переход на задание:", taskId);
-    
+
     // Переход на задание с правильным API-путём
-    navigate(`/task_data/${taskId}`);
+    navigate(`/course/${id}/lesson/${taskId}`);
   };
 
   return (
@@ -62,7 +62,9 @@ function CoursePage() {
           <p>{course.description}</p>
         </div>
         <div className="course-details">
-          <p><strong>Автор:</strong> {course.author}</p>
+          <p>
+            <strong>Автор:</strong> {course.author}
+          </p>
           <p>
             <strong>Дата создания:</strong> {new Date(course.createdAt).toLocaleDateString()}
           </p>
@@ -82,7 +84,12 @@ function CoursePage() {
                   key={taskId}
                   className="task"
                   onClick={() => handleTaskClick(taskId)}
-                  style={{ cursor: "pointer", border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}
+                  style={{
+                    cursor: "pointer",
+                    border: "1px solid #ccc",
+                    padding: "10px",
+                    marginBottom: "10px",
+                  }}
                 >
                   <h3>{task.title}</h3>
                   <p>{task.description}</p>

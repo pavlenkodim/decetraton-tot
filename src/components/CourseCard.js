@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 function CourseCard({ course }) {
   return (
@@ -9,17 +8,12 @@ function CourseCard({ course }) {
       {course.progress !== undefined && (
         <div className="course-progress">
           <div className="progress-bar">
-            <div
-              className="progress-fill"
-              style={{ width: `${course.progress}%` }}
-            ></div>
+            <div className="progress-fill" style={{ width: `${course.progress}%` }}></div>
           </div>
           <span className="progress-text">{course.progress}%</span>
         </div>
       )}
-      <Link className="button" to={`/course/${course.id}`}>
-        Подробнее
-      </Link>
+      <button className="button">Подробнее</button>
     </div>
   );
 }
