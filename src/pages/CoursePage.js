@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-// Функция для получения данных курса
 const fetchCourseData = (courseId) =>
   fetch(`/api/course/${courseId}`)
     .then((response) => {
@@ -13,7 +12,7 @@ const fetchCourseData = (courseId) =>
     .then((data) => data);
 
 function CoursePage() {
-  const { id } = useParams(); // Получаем ID курса из URL
+  const { id } = useParams(); // id курса
   const navigate = useNavigate();
 
   const [course, setCourse] = useState(null);
@@ -22,15 +21,14 @@ function CoursePage() {
 
   useEffect(() => {
     if (!id) {
-      setLoading(false);
       setError("Неверный ID курса.");
+      setLoading(false);
       return;
     }
 
-    // Делаем запрос на получение данных курса по ID
     fetchCourseData(id)
       .then((data) => {
-        setCourse(data); // Сохраняем данные курса в состоянии
+        setCourse(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -40,36 +38,29 @@ function CoursePage() {
       });
   }, [id]);
 
-  // Если данные ещё загружаются
-  if (loading) {
-    return <div>Загрузка...</div>;
-  }
+  if (loading) return <div>Загрузка...</div>;
+  if (error) return <div>{error}</div>;
+  if (!course) return <div>Курс не найден.</div>;
 
-  // Если произошла ошибка
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  // Если курс не найден
-  if (!course) {
-    return <div>Курс не найден.</div>;
-  }
-
-  // Функция для перехода на страницу задания
-  const handleTaskClick = (taskId) => {
-    navigate(`/task/${taskId}`);  // Правильная навигация на страницу задания
+  // Функция для перехода на страницу задания.
+  // Здесь предполагается, что у каждого задания есть task.id и lessonId (если нужно)
+  const handleTaskClick = (taskId, lessonId) => {
+    if (!taskId) {
+      console.error("Ошибка: taskId не задан.");
+      return;
+    }
+    console.log("Переход на задание:", taskId);
+    // Например, переходим по маршруту с courseId, lessonId и taskId
+    navigate(`/course/${id}/lesson/${lessonId}/task/${taskId}`);
   };
 
   return (
     <div className="course-page">
       <div className="container">
-        {/* Заголовок и описание курса */}
         <div className="course-header">
           <h1>{course.name}</h1>
           <p>{course.description}</p>
         </div>
-
-        {/* Информация о курсе */}
         <div className="course-details">
           <p><strong>Автор:</strong> {course.author}</p>
           <p>
@@ -79,24 +70,36 @@ function CoursePage() {
             <strong>Последнее обновление:</strong> {new Date(course.updatedAt).toLocaleDateString()}
           </p>
         </div>
-
-        {/* Список заданий курса */}
         <div className="tasks">
           <h2>Задания:</h2>
-          {course.tasks && course.tasks.length > 0 ? (
-            course.tasks.map((task) => (
-              <div
-                key={task.id}
-                className="task"
-                onClick={() => handleTaskClick(task.id)}  // Переход по клику
-              >
-                <h3>{task.title}</h3>
-                <p>{task.description}</p>
-                <button onClick={() => handleTaskClick(task.id)} className="task-button">
-                  Посмотреть задание
-                </button>
-              </div>
-            ))
+          {course.tasks && Array.isArray(course.tasks) && course.tasks.length > 0 ? (
+            course.tasks.map((task, index) => {
+              // Если у задания нет поля id, используем индекс+1 как строку
+              const taskId = task.id ? task.id.toString() : (index + 1).toString();
+              // Если у задания есть lessonId, используем его; иначе можно задать значение по умолчанию
+              const lessonId = task.lessonId ? task.lessonId.toString() : "1";
+              console.log("Отрисовываем задание:", taskId);
+              return (
+                <div
+                  key={taskId}
+                  className="task"
+                  onClick={() => handleTaskClick(taskId, lessonId)}
+                  style={{ cursor: "pointer", border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}
+                >
+                  <h3>{task.title}</h3>
+                  <p>{task.description}</p>
+                  {/* Можно использовать кнопку для перехода */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleTaskClick(taskId, lessonId);
+                    }}
+                  >
+                    Посмотреть задание
+                  </button>
+                </div>
+              );
+            })
           ) : (
             <p>Нет заданий, прикрепленных к этому курсу.</p>
           )}

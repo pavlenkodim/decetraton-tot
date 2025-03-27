@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Button from "../components/Button"; // Компонент Button для кнопки
-import axios from "axios"; // Импортируем axios
+import Button from "../components/Button";
+import axios from "axios";
 
 function TestPage() {
-  const { courseId, lessonId } = useParams();  // Получаем параметры из URL
+  // Получаем параметры из URL: courseId и lessonId (передаётся в маршруте)
+  const { courseId, lessonId } = useParams();
   const navigate = useNavigate();
 
-  const [test, setTest] = useState(null);  // Храним данные теста
-  const [answers, setAnswers] = useState({});  // Храним ответы пользователя
+  // Для отладки выводим параметры
+  console.log("TestPage params:", { courseId, lessonId });
+
+  // Состояния для тестовых данных и ответов пользователя
+  const [test, setTest] = useState(null);
+  const [answers, setAnswers] = useState({});
 
   useEffect(() => {
     if (!lessonId) {
@@ -16,29 +21,29 @@ function TestPage() {
       return;
     }
 
-    // Делаем запрос к API для получения данных теста
+    // Запрашиваем данные теста по API, используя lessonId
     axios
       .get(`/api/task_data/${lessonId}`, {
-        headers: {
-          "Accept": "application/json",
-        },
+        headers: { "Accept": "application/json" },
       })
       .then((response) => {
         console.log("Полученные данные теста:", response.data);
-        setTest(response.data);  // Сохраняем данные теста
+        setTest(response.data);
       })
       .catch((error) => {
         console.error("Ошибка загрузки теста:", error);
       });
-  }, [lessonId]);  // Зависимость от lessonId
+  }, [lessonId]);
 
-  // Обработка выбора ответа
+  // Обработчик выбора ответа для вопроса
   const handleAnswerSelect = (questionId, answerIndex) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answerIndex }));
   };
 
   // Обработка отправки теста
   const handleSubmit = () => {
+    if (!test || !test.questions) return;
+
     let correctAnswers = 0;
     test.questions.forEach((question) => {
       if (answers[question.id] === question.correctAnswer) {
@@ -54,21 +59,22 @@ function TestPage() {
       earnedPoints: correctAnswers * 10, // Например, 10 очков за правильный ответ
     };
 
-    // Перенаправляем на страницу с результатами
+    // Перенаправляем на страницу результатов теста,
+    // передавая результаты, courseId и lessonId через state
     navigate(`/course/${courseId}/lesson/${lessonId}/test/result`, {
       state: { results, courseId, lessonId },
     });
   };
 
-  // Если данные теста не загружены
+  // Пока данные не загрузились – показываем индикатор загрузки
   if (!test) {
-    return <div>Загрузка...</div>;
+    return <div>Загрузка теста...</div>;
   }
 
   return (
     <div className="test-page">
       <h1>Тест по уроку</h1>
-      {test.questions.map((question, qIndex) => (
+      {test.questions && test.questions.map((question, qIndex) => (
         <div key={question.id} className="question-block">
           <h2>Вопрос {qIndex + 1}</h2>
           <p>{question.text}</p>

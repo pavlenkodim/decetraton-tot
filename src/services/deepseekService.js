@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://127.0.0.1:5000/chat';
+const URL = 'http://192.168.235.38:5000/chat';
 
 export const sendPromptToDeepSeek = async (prompt) => {
   try {
