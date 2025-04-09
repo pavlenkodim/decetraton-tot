@@ -28,8 +28,9 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/ai-assistant" element={<AIAssistantPage />} />
             <Route path="/my-learning" element={<MyLearningPage />} />
-            <Route path="/course/:courseId/lesson/:lessonId" element={<TaskPage />} />
-            <Route path="/course/:courseId/lesson/:lessonId/test" element={<TestPage />} />
+            {/* Переход на задание: courseId и lessonId (так вы передаёте id задания) */}
+            <Route path="/course/:courseId/lesson/:lessonId" element={<TestPage />} />
+            {/* <Route path="/course/:courseId/lesson/:lessonId/test" element={<TestPage />} /> */}
             <Route
               path="/course/:courseId/lesson/:lessonId/test/result"
               element={<TestResultPage />}

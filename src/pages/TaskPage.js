@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import apiClient from "../services/apiClient";
 
 function TaskPage() {
+  // Из маршрута получаем courseId и lessonId
   const { courseId, lessonId } = useParams();
   console.log("Получены параметры в TaskPage:", { courseId, lessonId });
 
@@ -10,22 +11,16 @@ function TaskPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchCourseData = async () => {
-    try {
-      const response = await apiClient(`/api/course/${courseId}`);
-      console.log("Полученные данные курса:", response.data);
-    } catch (error) {
-      console.error("Ошибка загрузки курса:", error);
-    } finally {
-    }
-  };
-
+  // Функция для запроса данных урока/задания по эндпоинту /api/lessons/:lessonId
   const fetchTaskData = async () => {
     try {
       setLoading(true);
-      const response = await apiClient(`/task_data/${lessonId}`);
+      // Если ваш API возвращает данные урока (задания) по адресу /api/lessons/{lessonId}
+      const response = await apiClient.get(`/api/lessons/${lessonId}`);
       console.log("Полученные данные задания:", response.data);
-      setTaskData(response.data);
+      // Если API возвращает объект, обернём его в массив
+      const data = Array.isArray(response.data) ? response.data : [response.data];
+      setTaskData(data);
     } catch (error) {
       console.error("Ошибка загрузки задания:", error);
       setError("Ошибка загрузки задания");
@@ -40,7 +35,6 @@ function TaskPage() {
       setLoading(false);
       return;
     }
-    fetchCourseData();
     fetchTaskData();
   }, [courseId, lessonId]);
 
@@ -50,31 +44,49 @@ function TaskPage() {
   return (
     <div className="task-page">
       <div className="container">
-        {taskData.map((task, index) => (
-          <div key={index}>
-            <h2>Задание: {task.questionText}</h2>
-            {task.state === "checkbox" && (
-              <div>
-                {task.options.map((options, index) => (
-                  <div key={index}>
-                    <input type="checkbox" />
-                    <label>{options.optionText}</label>
-                  </div>
-                ))}
-              </div>
-            )}
-            {task.state === "radiobox" && (
-              <div>
-                {task.options.map((options, index) => (
-                  <div key={index}>
-                    <input type="radio" />
-                    <label>{options.optionText}</label>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+        {taskData && taskData.length > 0 ? (
+          taskData.map((task, index) => (
+            <div key={index} className="task-item">
+              <h2>Задание: {task.title}</h2>
+              {/* Если в ответе API есть HTML-код, который нужно отобразить */}
+              {task.material && (
+                <div dangerouslySetInnerHTML={{ __html: task.material }} />
+              )}
+              <p>{task.assignment}</p>
+              {/* Пример отрисовки вариантов для тестового задания */}
+              {task.state === "checkbox" && task.options && (
+                <div className="options">
+                  {task.options.map((option, i) => (
+                    <div key={i}>
+                      <input type="checkbox" id={`checkbox-${index}-${i}`} />
+                      <label htmlFor={`checkbox-${index}-${i}`}>
+                        {option.optionText}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {task.state === "radiobox" && task.options && (
+                <div className="options">
+                  {task.options.map((option, i) => (
+                    <div key={i}>
+                      <input
+                        type="radio"
+                        id={`radio-${index}-${i}`}
+                        name={`question-${index}`}
+                      />
+                      <label htmlFor={`radio-${index}-${i}`}>
+                        {option.optionText}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <div>Нет данных о задании</div>
+        )}
       </div>
     </div>
   );
