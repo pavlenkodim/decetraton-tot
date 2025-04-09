@@ -23,6 +23,24 @@ function CoursesPage() {
     fetchData();
   }, []);
 
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  // Используем useMemo для вычисления отфильтрованных курсов
+  const filteredCourses = useMemo(() => {
+    const lowerFilter = filter.trim().toLowerCase();
+    // Если фильтр пустой, возвращаем все курсы
+    if (lowerFilter === "") {
+      return courses;
+    }
+    return courses.filter((course) => {
+      // Если у курса нет title или name, используем пустую строку
+      const courseTitle = (course.title || course.name || "").toLowerCase();
+      return courseTitle.includes(lowerFilter);
+    });
+  }, [courses, filter]);
+
   if (loading) {
     return <div>Загрузка курсов...</div>;
   }
@@ -30,6 +48,22 @@ function CoursesPage() {
   return (
     <div className="courses-page">
       <h1>Доступные курсы</h1>
+      {/* Поле ввода для фильтрации */}
+      <div style={{ marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Введите название курса:"
+          value={filter}
+          onChange={handleFilterChange}
+          style={{
+            padding: "10px",
+            width: "100%",
+            maxWidth: "400px",
+            border: "1px solid var(--tg-theme-hint-color)",
+            borderRadius: "8px",
+          }}
+        />
+      </div>
       <div className="course-list">
         {courses && courses.length > 0 ? (
           courses.map((course) => (
