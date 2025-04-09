@@ -54,10 +54,12 @@ function CoursesPage() {
           onChange={handleFilterChange}
           style={{
             padding: "10px",
-            width: "100%",
+            width: "95%",
             maxWidth: "400px",
             border: "1px solid var(--tg-theme-hint-color)",
             borderRadius: "8px",
+            backgroundColor: "var(--tg-theme-secondary-bg-color)",
+            color: "var(--tg-theme-text-color)"
           }}
         />
       </div>
