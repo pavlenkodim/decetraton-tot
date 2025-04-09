@@ -1122,12 +1122,12 @@ textarea {
 
 /* Обновляем карточку курсов */
 .course-item {
-  border: 1px solid var(--tg-theme-hint-color);
+  border: 1px solid #e0e0e0;         /* более светлая рамка */
   border-radius: 8px;
   padding: 20px;
-  background-color: var(--tg-theme-secondary-bg-color);
+  background-color: #fff;            /* белый фон */
   margin-bottom: 15px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); /* легкая тень */
   transition: transform 0.2s ease;
 }
 
@@ -1139,7 +1139,7 @@ textarea {
   margin-top: 0;
   margin-bottom: 6px;
   font-size: 18px;
-  color: #333;
+  color: #333; /* более темный для контраста */
 }
 
 /* Подзаголовок, если вы планируете его выводить */
@@ -1147,9 +1147,10 @@ textarea {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 14px;
-  color: #777;
+  color: #777; /* сероватый оттенок */
 }
 
+/* Краткое описание курса */
 .course-description {
   margin-bottom: 10px;
   font-size: 14px;
@@ -1175,7 +1176,7 @@ textarea {
 
 .course-progress .progress-fill {
   height: 100%;
-  background-color: #29bf59; /* Зеленый оттенок */
+  background-color: #29bf59; /* Зеленый цвет заполнения */
   transition: width 0.3s ease;
 }
 
