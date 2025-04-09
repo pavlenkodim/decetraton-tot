@@ -1135,13 +1135,12 @@ textarea {
   transform: translateY(-2px);
 }
 
-/* Привязка стиля заголовков карточек к странице CoursesPage */
-.courses-page .course-item h2 {
-  font-size: 22px; /* увеличенный размер шрифта */
-  color: var(--tg-theme-button-color); /* яркий цвет, соответствующий теме Telegram */
+.course-item h2 {
+  font-size: 22px; /* увеличено с 18px до 22px */
+  color: var(--tg-theme-button-color); /* используем переменную с ярким оттенком, указанным для кнопок Telegram */
   margin-top: 0;
   margin-bottom: 10px;
-  font-weight: bold;
+  font-weight: bold; /* если хотите еще больше акцента */
 }
 
 /* Подзаголовок, если вы планируете его выводить */

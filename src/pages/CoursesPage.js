@@ -60,7 +60,7 @@ function CoursesPage() {
           }}
         />
       </div>
-      <div className="course-list">
+      <div className="my-learning-page">
         {filteredCourses && filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
             <Link
