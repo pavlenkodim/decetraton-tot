@@ -9,7 +9,7 @@ function CoursesPage() {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchData() {
       try {
         setLoading(true);
         const response = await apiClient("/api/user_dashboard");
@@ -19,8 +19,7 @@ function CoursesPage() {
       } finally {
         setLoading(false);
       }
-    };
-
+    }
     fetchData();
   }, []);
 
@@ -30,9 +29,7 @@ function CoursesPage() {
 
   const filteredCourses = useMemo(() => {
     const lowerFilter = filter.trim().toLowerCase();
-    if (lowerFilter === "") {
-      return courses;
-    }
+    if (lowerFilter === "") return courses;
     return courses.filter((course) => {
       const courseTitle = (course.title || course.name || "").toLowerCase();
       return courseTitle.includes(lowerFilter);
