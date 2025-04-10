@@ -1124,7 +1124,7 @@ textarea {
 .course-item {
   border: 1px solid var(--tg-theme-hint-color);
   border-radius: 8px;
-  padding: 20px;
+  padding: 15px;
   background-color: var(--tg-theme-secondary-bg-color);
   margin-bottom: 15px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
@@ -1159,7 +1159,7 @@ textarea {
 }
 
 /* Блок прогресса */
-.course-progress {
+/* .course-progress {
   display: flex;
   align-items: center;
   margin-top: 10px;
@@ -1177,12 +1177,12 @@ textarea {
 .course-progress .progress-fill {
   height: 100%;
   background-color: #29bf59; /* Зеленый оттенок */
-  transition: width 0.3s ease;
-}
+  /* transition: width 0.3s ease;
+} */
 
-.course-progress .progress-text {
+/* .course-progress .progress-text {
   font-size: 14px;
   color: #333;
   min-width: 30px;
   text-align: right;
-}
+} */ 

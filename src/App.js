@@ -10,7 +10,8 @@ import AIAssistantPage from "./pages/AIAssistantPage";
 import MyLearningPage from "./pages/MyLearningPage";
 import TestPage from "./pages/TestPage";
 import TestResultPage from "./pages/TestResultPage";
-import TaskPage from "./pages/TaskPage"; // Страница задания
+// Импортируем наш новый компонент TheoryPage
+import TheoryPage from "./pages/TheoryPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
@@ -28,9 +29,10 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/ai-assistant" element={<AIAssistantPage />} />
             <Route path="/my-learning" element={<MyLearningPage />} />
-            {/* Переход на задание: courseId и lessonId (так вы передаёте id задания) */}
-            <Route path="/course/:courseId/lesson/:lessonId" element={<TestPage />} />
-            {/* <Route path="/course/:courseId/lesson/:lessonId/test" element={<TestPage />} /> */}
+            {/* Здесь, когда пользователь выбирает задание, переходим на страницу теории */}
+            <Route path="/course/:courseId/lesson/:lessonId/task/:taskId" element={<TheoryPage />} />
+            {/* Тестовые маршруты */}
+            <Route path="/course/:courseId/lesson/:lessonId/test" element={<TestPage />} />
             <Route
               path="/course/:courseId/lesson/:lessonId/test/result"
               element={<TestResultPage />}
